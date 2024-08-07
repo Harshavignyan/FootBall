@@ -1,0 +1,17 @@
+{
+  "name": "footballscoreboardapp",
+  "version": "1.0.0",
+  "description": "This repository is about building an application for <u><b><i>Football Live Scoreboard</i></b></u> using websocket concept implemented with the help of <b>socket.io</b> library.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "harsha",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "bootstrap": "^5.3.3",
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  }
+}
