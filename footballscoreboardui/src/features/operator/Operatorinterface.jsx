@@ -1,21 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { lcName, rcName, lcScore, rcScore } from './operatorSlice';
+import { lcScore, rcScore } from './operatorSlice';
 import io from 'socket.io-client';
 
 function Operatorinterface() {
     const dispatch = useDispatch();
-    const { leftCountryName, rightCountryName, leftCountryScore, rightCountryScore } = useSelector((state) => state.scoreboard);
+    const { leftCountryName, rightCountryName, leftCountryScore, rightCountryScore, leftCountryFlag, rightCountryFlag } = useSelector((state) => state.scoreboard);
     const socketRef = useRef(null);
 
     useEffect(() => {
         // Initialize WebSocket connection
         socketRef.current = io('http://localhost:3000');
 
+        // Listen for 'scoreUpdated' event
+        socketRef.current.on('updateScore', (data) => {
+            dispatch(lcScore(data.leftCountryScore));
+            dispatch(rcScore(data.rightCountryScore));
+        });
+
         return () => {
             socketRef.current.disconnect();
         };
-    }, []);
+    }, [dispatch]);
 
     const sendUpdate = (leftIncrement, rightIncrement) => {
         const newLeftScore = leftCountryScore + leftIncrement;
@@ -36,19 +42,27 @@ function Operatorinterface() {
             <div className="d-flex container justify-content-evenly">
                 <h1 className="display-3 p-2 m-2">Update Score:</h1>
             </div>
-            <div className=" d-flex flex-row justify-content-center ">
+            <div className="d-flex flex-row justify-content-center">
                 <div className="d-flex justify-content-evenly align-middle w-50 h-100">
                     <button className="btn btn-outline-success p-2 m-2" onClick={() => sendUpdate(1, 0)}>
-                        IND
+                        <img src={leftCountryFlag} alt={leftCountryName} style={{ width: '50px', height: '30px' }} />
+                        {/* {leftCountryName} */}
                     </button>
                     <button className="btn btn-outline-danger p-2 m-2" onClick={() => sendUpdate(0, 1)}>
-                        ENG
+                        <img src={rightCountryFlag} alt={rightCountryName} style={{ width: '50px', height: '30px' }} />
+                        {/* {rightCountryName} */}
                     </button>
                 </div>
             </div>
-            <div className="align-items-center justify-content-evenly d-flex flex-row text-center container">
-                <p class="w-25 list-group-item display-4 list-group-item-action list-group-item-warning">IND: {leftCountryScore}</p>
-                <p class="w-25 list-group-item display-4 list-group-item-action list-group-item-dark">ENG: {rightCountryScore}</p>
+            <div className="align-items-center justify-content-between d-flex flex-row text-center container">
+                <p className="w-50 list-group-item display-4 list-group-item-action list-group-item-warning">
+                    {/* <img src={leftCountryFlag} alt={leftCountryName} style={{ width: '50px', height: '30px' }} /> */}
+                    {leftCountryName}: {leftCountryScore}
+                </p>
+                <p className="w-50 list-group-item display-4 list-group-item-action list-group-item-dark">
+                    {/* <img src={rightCountryFlag} alt={rightCountryName} style={{ width: '50px', height: '30px' }} /> */}
+                    {rightCountryName}: {rightCountryScore}
+                </p>
             </div>
         </div>
     );

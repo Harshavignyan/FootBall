@@ -28,6 +28,12 @@ io.on('connection', (socket) => {
     io.emit('scoreUpdated', data);
   });
 
+  // Handle incoming country updates
+  socket.on('updateCountries', (data) => {
+    console.log('Countries updated:', data); // Check the console to see if this is logged
+    io.emit('countriesUpdated', data);
+});
+
   socket.on('disconnect', () => {
     console.log('Client disconnected');
   });
