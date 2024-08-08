@@ -4,7 +4,8 @@ This repository contains an application for a **Football Live Scoreboard** using
 
 ## Overview
 
-The application allows users to operate and view live football scores in real-time. It features two main interfaces:
+The application allows users to operate and view live football scores in real-time. It features three main interfaces:
+- **Match Pre-Data Interface**: For setting up countries before the match starts.
 - **Match Operator Interface**: For managing and updating the live scores.
 - **Customer Interface**: For viewers to see the live scores.
 
@@ -13,6 +14,7 @@ The application allows users to operate and view live football scores in real-ti
 - Real-time score updates using WebSocket.
 - Separate interfaces for operators and viewers.
 - User-friendly design with Bootstrap for styling.
+- Pre-match setup for selecting countries.
 
 ## Getting Started
 
@@ -48,15 +50,20 @@ Ensure you have the following installed on your machine:
 
 2. Open your web browser and navigate to the following URLs based on your role:
 
-    - **Match Operator**: [http://localhost:5173/prematchboard](http://localhost:5173/prematchboard)
+    - **Match Pre-Data**: [http://localhost:5173/prematchboard](http://localhost:5173/prematchboard)
+    - **Match Operator**: [http://localhost:5173/operator](http://localhost:5173/operator)
     - **Viewer**: [http://localhost:5173/customer](http://localhost:5173/customer)
 
 ## Usage
 
-- **Match Operator Interface**: Update the scores live by sending requests to [http://localhost:5173/prematchboard](http://localhost:5173/prematchboard).
+- **Match Pre-Data Interface**: Set up the countries playing the match by selecting from a dropdown menu at [http://localhost:5173/prematchboard](http://localhost:5173/prematchboard).
+- **Match Operator Interface**: Update the scores live by sending requests to [http://localhost:5173/operator](http://localhost:5173/operator).
 - **Customer Interface**: View the live scores in real-time at [http://localhost:5173/customer](http://localhost:5173/customer).
 
 ## Screenshots
+
+### Pre Match Data Interface
+![Match Operator Interface](./assets/screenshot3.png)
 
 ### Match Operator Interface
 ![Match Operator Interface](./assets/screenshot2.png)
@@ -80,6 +87,14 @@ The project uses the following dependencies:
 - **src/**: Contains React components and Redux slices.
 - **server.js**: The main server file that sets up Express and socket.io.
 
+## Routes
+
+The following routes are available in the application:
+- `/prematchboard`: For setting up countries before the match starts.
+- `/operator`: For managing and updating live scores.
+- `/customer`: For viewing live scores.
+
+
 ## Author
 
 **Harsha Vignyan Ayaluri**
@@ -87,5 +102,3 @@ The project uses the following dependencies:
 ## License
 
 This project is licensed under the ISC License.
-
----
