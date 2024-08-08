@@ -6,8 +6,8 @@ This repository contains an application for a **Football Live Scoreboard** using
 
 The application allows users to operate and view live football scores in real-time. It features three main interfaces:
 - **Match Pre-Data Interface**: For setting up countries before the match starts.
-- **Match Operator Interface**: For managing and updating the live scores.
-- **Customer Interface**: For viewers to see the live scores.
+- **Match Operator Interface**: For managing and updating the live scores along with flags.
+- **Customer Interface**: For viewers to see the live scores along with flags.
 
 ## Features
 
