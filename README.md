@@ -1,13 +1,18 @@
+
+---
+
 # Football Live Scoreboard
 
 This repository contains an application for a **Football Live Scoreboard** using WebSocket technology, implemented with the help of the **socket.io** library.
 
 ## Overview
 
-The application allows users to operate and view live football scores in real-time. It features three main interfaces:
+The application allows users to operate and view live football scores in real-time. It features several key interfaces:
 - **Match Pre-Data Interface**: For setting up countries before the match starts.
 - **Match Operator Interface**: For managing and updating the live scores along with flags.
 - **Customer Interface**: For viewers to see the live scores along with flags.
+- **User Authentication**: Allows admins and users to sign up, log in, and manage sessions.
+- **Theme Toggle**: Switch between light and dark modes using a toggle button, powered by Context API and Bootstrap styles.
 
 ## Features
 
@@ -15,6 +20,9 @@ The application allows users to operate and view live football scores in real-ti
 - Separate interfaces for operators and viewers.
 - User-friendly design with Bootstrap for styling.
 - Pre-match setup for selecting countries.
+- User and admin authentication with JWT.
+- NavBar with login, signup, and logout options.
+- Theme toggle for switching between light and dark modes.
 
 ## Getting Started
 
@@ -53,33 +61,66 @@ Ensure you have the following installed on your machine:
     - **Match Pre-Data**: [http://localhost:5173/prematchboard](http://localhost:5173/prematchboard)
     - **Match Operator**: [http://localhost:5173/operator](http://localhost:5173/operator)
     - **Viewer**: [http://localhost:5173/customer](http://localhost:5173/customer)
+    - **Login**: [http://localhost:5173/login](http://localhost:5173/login)
+    - **Signup**: [http://localhost:5173/signup](http://localhost:5173/signup)
 
 ## Usage
 
 - **Match Pre-Data Interface**: Set up the countries playing the match by selecting from a dropdown menu at [http://localhost:5173/prematchboard](http://localhost:5173/prematchboard).
 - **Match Operator Interface**: Update the scores live by sending requests to [http://localhost:5173/operator](http://localhost:5173/operator).
 - **Customer Interface**: View the live scores in real-time at [http://localhost:5173/customer](http://localhost:5173/customer).
+- **User Authentication**: Create users and admins, log in to the application, and manage sessions. The logout option clears the JWT token from local storage.
+- **Theme Toggle**: Switch between light and dark modes using the theme toggle button located in the NavBar.
 
 ## Screenshots
 
+### Signup Interface
+![Signup Interface](./assets/screenshot5.png)
+
+### Login Interface
+![Login Interface](./assets/screenshot4.png)
+
 ### Pre Match Data Interface
-![Match Operator Interface](./assets/screenshot3.png)
+![Pre Match Data Interface](./assets/screenshot3.png)
 
 ### Match Operator Interface
 ![Match Operator Interface](./assets/screenshot2.png)
 
-### Customer Interface
+### User Dashboard Interface
 ![Customer Interface](./assets/screenshot1.png)
+
+### Admin Dashboard Interface
+![Admin Dashboard Interface](./assets/screenshot7.png)
+
+### On Toggle
+![On Toggle](./assets/screenshot6.png)
 
 ## Dependencies
 
 The project uses the following dependencies:
 
-- **express**: Fast, unopinionated, minimalist web framework for Node.js
-- **body-parser**: Node.js body parsing middleware
-- **bootstrap**: Front-end component library for developing with HTML, CSS, and JS
-- **nodemon**: Tool that helps develop Node.js applications by automatically restarting the node application when file changes are detected
-- **socket.io**: Enables real-time bidirectional event-based communication
+**Frontend:**
+- `@reduxjs/toolkit`: "^2.2.7"
+- `bootstrap`: "^5.3.3"
+- `bootstrap-icons`: "^1.11.3"
+- `formik`: "^2.4.6"
+- `mdb-react-ui-kit`: "^8.0.0"
+- `mdb-ui-kit`: "^7.3.2"
+- `react`: "^18.3.1"
+- `react-dom`: "^18.3.1"
+- `react-redux`: "^9.1.2"
+- `react-router-dom`: "^6.26.0"
+- `socket.io-client`: "^4.7.5"
+- `yup`: "^1.4.0"
+
+**Backend:**
+- `body-parser`: "^1.20.2"
+- `cors`: "^2.8.5"
+- `express`: "^4.19.2"
+- `jsonwebtoken`: "^9.0.2"
+- `mongoose`: "^8.5.2"
+- `nodemon`: "^3.1.4"
+- `socket.io`: "^4.7.5"
 
 ## Project Structure
 
@@ -93,7 +134,10 @@ The following routes are available in the application:
 - `/prematchboard`: For setting up countries before the match starts.
 - `/operator`: For managing and updating live scores.
 - `/customer`: For viewing live scores.
-
+- `/login`: For logging in as a user or admin.
+- `/signup`: For signing up as a user.
+- `/dashboard`: Admin dashboard for managing the application.
+- `/dashboard/signup`: For signing up as an admin.
 
 ## Author
 
@@ -102,3 +146,6 @@ The following routes are available in the application:
 ## License
 
 This project is licensed under the ISC License.
+
+---
+

@@ -1,1 +1,66 @@
-@import url('/node_modules/bootstrap/dist/css/bootstrap.min.css')
+@import url('/node_modules/bootstrap/dist/css/bootstrap.min.css');
+
+/* index.css */
+body.light {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+body.dark {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+/* Add specific styles for your components */
+.operatorinterface.light {
+    background-color: #f8f9fa;
+    color: #000000;
+}
+
+.operatorinterface.dark {
+    background-color: #222222;
+    color: #ffffff;
+}
+
+.operatorinterface.dark .btn-outline-success {
+    border-color: whitesmoke;
+    color: whitesmoke;
+}
+
+.operatorinterface.dark .btn-outline-danger {
+    border-color: whitesmoke;
+    color: whitesmoke;
+}
+
+.operatorinterface.dark .list-group-item-warning {
+    border-color: whitesmoke;
+    color: #fff3cd;
+}
+
+.operatorinterface.dark .list-group-item-dark {
+    border-color: whitesmoke;
+    color: #e2e3e5;
+}
+/* Ensure the dropdown menu appears on hover */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Optional: Adjust positioning if needed */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: auto;
+    transform: translateY(0);
+    margin-top: .125rem;
+    z-index: 1000;
+    max-height: calc(100vh - 50px); /* Adjust if necessary */
+    overflow-y: auto;
+    display: none; /* Hide by default */
+}
+
+/* Show dropdown menu on hover */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
