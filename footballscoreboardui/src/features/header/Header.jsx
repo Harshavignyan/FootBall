@@ -1,22 +1,25 @@
+// Header.js
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { Dropdown } from 'mdb-ui-kit';
 import { useTheme } from '../theme/ThemeContext';
 import { logout } from '../login/loginSlice';
+import NavBar from './NavBar';
+import ThemeToggleButton from './ThemeToggleButton';
+import ProfileDropdown from './ProfileDropdown';
+import { Link } from 'react-router-dom';
 
 function Header() {
     const { theme, toggleTheme } = useTheme();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // Access token, role, and profile picture from Redux state
     const token = useSelector(state => state.auth.token);
     const role = useSelector(state => state.auth.role);
     const profilePic = useSelector(state => state.auth.profilePic);
 
     useEffect(() => {
-        // Manually initialize dropdown
         const dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
         dropdownElementList.map(function (dropdownToggleEl) {
             return new Dropdown(dropdownToggleEl);
@@ -56,70 +59,12 @@ function Header() {
                                 loading="lazy"
                             />
                         </Link>
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            {(token && role === "admin") ? (
-                                <>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to="/customer">Matches</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to="/prematchboard">Start Match</Link>
-                                    </li>
-                                </>
-                            ) : role === "user" ? (
-                                <>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to="/customer">Matches</Link>
-                                    </li>
-                                </>
-                            ) : (
-                                <>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to="/customer">Matches</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to="/login">Login</Link>
-                                    </li>
-                                </>
-                            )}
-                        </ul>
+                        <NavBar token={token} role={role} />
                     </div>
 
                     <div className="d-flex align-items-center">
-                        <button className="btn btn-outline-secondary me-2" onClick={toggleTheme}>
-                            {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
-                        </button>
-                        {token && (
-                            <div>
-                                <div className="dropdown">
-                                    <a
-                                        className="dropdown-toggle d-flex align-items-center hidden-arrow"
-                                        href=""
-                                        id="navbarDropdownMenuAvatar"
-                                        data-mdb-toggle="dropdown"
-                                        aria-expanded="false"
-                                    >
-                                        <img
-                                            src={profilePic ? `http://localhost:3000/${profilePic}` : "https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"}
-                                            className="rounded-circle profile-img"
-                                            alt="Profile"
-                                            loading="lazy"
-                                        />
-                                    </a>
-                                    <ul
-                                        className="dropdown-menu dropdown-menu-end"
-                                        aria-labelledby="navbarDropdownMenuAvatar"
-                                    >
-                                        <li>
-                                            <Link className="dropdown-item" to="/dashboard">My profile</Link>
-                                        </li>
-                                        <li>
-                                            <button className="dropdown-item" onClick={handleLogout}>Logout</button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        )}
+                        <ThemeToggleButton theme={theme} toggleTheme={toggleTheme} />
+                        {token && <ProfileDropdown profilePic={profilePic} handleLogout={handleLogout} />}
                     </div>
                 </div>
             </nav>

@@ -19,6 +19,9 @@ The application allows users to operate and view live football scores in real-ti
 To enhance maintainability and ensure consistency, several reusable components have been introduced:
 - **InputField**: A general-purpose input field component for text inputs, including form labels and error messages.
 - **PasswordField**: A specialized component for password fields with a visibility toggle for improved user experience.
+- **NavBar**: Manages navigation links and adjusts based on user roles and authentication status.
+- **ThemeToggleButton**: Handles the theme toggle functionality between light and dark modes.
+- **ProfileDropdown**: Manages the profile picture dropdown and user logout functionality.
 
 These components help in maintaining a consistent look and feel across different forms and simplify updates and maintenance.
 
@@ -31,7 +34,7 @@ These components help in maintaining a consistent look and feel across different
 - User and admin authentication with JWT.
 - NavBar with login, signup, and logout options.
 - Theme toggle for switching between light and dark modes.
-- **Reusable Components**: Enhanced code reusability and maintainability with dedicated components for input fields and password management.
+- **Reusable Components**: Enhanced code reusability and maintainability with dedicated components for input fields, password management, navigation, theme toggling, and profile management.
 
 ## Getting Started
 
