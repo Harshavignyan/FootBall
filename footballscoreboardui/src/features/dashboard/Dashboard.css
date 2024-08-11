@@ -1,49 +1,51 @@
-/* Light mode styling */
 .dashboard-container {
+    /* border: 2px solid; */
+    display: flex;
+    align-items: flex-start; /* Aligns content to the top left */
     padding: 20px;
-    background-color: #f8f9fa; /* Light background for light mode */
-    color: #212529; /* Dark text for light mode */
     min-height: 100vh;
 }
 
-.dashboard-header {
+.profile-section {
+    /* border: 2px solid; */
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid #dee2e6;
-    padding-bottom: 10px;
+    flex-direction: column;
+    align-items: flex-start; /* Aligns content to the left */
+}
+
+.profile-pic-container {
+    
     margin-bottom: 20px;
 }
 
-.dashboard-header h1 {
-    font-size: 2rem;
-    margin: 0;
+.profile-pic {
+    width: 400px; /* Even larger size */
+    height: 400px; /* Even larger size */
+    border-radius: 50%;
+    object-fit: cover;
 }
 
-.dashboard-link {
-    color: #007bff; /* Link color */
+.username {
+    /* border: 2px solid; */
+    width: 100%;
+    text-align: center;
+    font-family:'Courier New', Courier, monospace;
+    font-size: 3rem;
+    margin: 0;
+    font-weight: bold;
+    color: #007BFF; /* Blue color */
+}
+
+/* .dashboard-link {
     text-decoration: none;
+    background: #007BFF; 
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
     font-size: 1rem;
+    font-weight: bold;
 }
 
 .dashboard-link:hover {
-    text-decoration: underline;
-}
-
-/* Dark mode styling */
-.dark .dashboard-container {
-    background-color: #343a40; /* Dark background for dark mode */
-    color: #f8f9fa; /* Light text for dark mode */
-}
-
-.dark .dashboard-header {
-    border-bottom: 2px solid #495057;
-}
-
-.dark .dashboard-link {
-    color: #17a2b8; /* Light blue color for links in dark mode */
-}
-
-.dark .dashboard-link:hover {
-    text-decoration: underline;
-}
+    background: #0056b3; 
+} */

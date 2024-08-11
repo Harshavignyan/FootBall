@@ -12,18 +12,28 @@ export const authApi = createApi({
             }),
         }),
         adminsignup: builder.mutation({
-            query: (credentials) => ({
-                url: '/registeradmin',
-                method: 'POST',
-                body: credentials,
-            }),
+            query: (formData) => {
+                console.log('FormData received:', formData);
+                return {
+                    url: '/registeradmin',
+                    method: 'POST',
+                    body: formData, // Assume formData is a valid FormData object
+                };
+            },
         }),
         usersignup: builder.mutation({
-            query: (credentials) => ({
-                url: '/registeruser',
-                method: 'POST',
-                body: credentials,
-            }),
+            query: (credentials) => {
+                const formData = new FormData();
+                Object.keys(credentials).forEach(key => {
+                    formData.append(key, credentials[key]);
+                });
+
+                return {
+                    url: '/registeruser',
+                    method: 'POST',
+                    body: formData, // FormData object containing all fields
+                };
+            },
         }),
     }),
 });

@@ -29,7 +29,8 @@ const Login = () => {
             dispatch(setUser({
                 username: response.username,
                 token: response.token,
-                role: response.role // Capture the role from the response
+                role: response.role,
+                profilePic: response.profilePic // Capture the profile picture from the response
             }));
             
             // Redirect based on user role

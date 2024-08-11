@@ -6,6 +6,7 @@ const getLocalStorageValues = () => {
         username: localStorage.getItem('username') || '',
         token: localStorage.getItem('token') || '',
         role: localStorage.getItem('role') || '',
+        profilePic: localStorage.getItem('profilePic') || '', // Add profilePic
     };
 };
 
@@ -19,18 +20,25 @@ const loginSlice = createSlice({
             state.username = action.payload.username;
             state.token = action.payload.token; // Store the token
             state.role = action.payload.role; // Store the role
-            // Save token and role to localStorage
+            state.profilePic = action.payload.profilePic; // Store the profilePic
+            
+            // Save token, role, username, and profilePic to localStorage
             localStorage.setItem('username', action.payload.username);
             localStorage.setItem('token', action.payload.token);
             localStorage.setItem('role', action.payload.role);
+            localStorage.setItem('profilePic', action.payload.profilePic); // Save profilePic
         },
         logout: (state) => {
             state.username = '';
             state.token = '';
             state.role = ''; // Clear the role
-            localStorage.removeItem('username'); // Remove username from localStorage
-            localStorage.removeItem('token'); // Remove token from localStorage
-            localStorage.removeItem('role'); // Remove role from localStorage
+            state.profilePic = ''; // Clear the profilePic
+            
+            // Remove username, token, role, and profilePic from localStorage
+            localStorage.removeItem('username');
+            localStorage.removeItem('token');
+            localStorage.removeItem('role');
+            localStorage.removeItem('profilePic'); // Remove profilePic
         },
     },
 });

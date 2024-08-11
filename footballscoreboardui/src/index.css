@@ -64,3 +64,8 @@ body.dark {
 .dropdown:hover .dropdown-menu {
     display: block;
 }
+.profile-img {
+    height: 50px; /* Adjust the height */
+    width: 50px;  /* Adjust the width */
+    object-fit: cover; /* Ensure the image fits within the container */
+}

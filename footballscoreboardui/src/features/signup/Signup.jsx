@@ -12,6 +12,7 @@ const Signup = () => {
     const [adminsignup] = useAdminsignupMutation();
     const [usersignup] = useUsersignupMutation();
     const [showPassword, setShowPassword] = useState(false);
+    const [profilePic, setProfilePic] = useState(null); // State to hold the selected file
 
     const initialValues = {
         email: '',
@@ -38,19 +39,31 @@ const Signup = () => {
     });
 
     const onSubmit = async (values, { setSubmitting, setErrors }) => {
+        const formData = new FormData();
+        formData.append('email', values.email);
+        formData.append('password', values.password);
+        formData.append('username', values.username);
+        formData.append('contact', values.contact);
+        if (profilePic) {
+            formData.append('profilePic', profilePic);
+        }
+
+        console.log('Submitting FormData:', formData);
+
         try {
             if (location.pathname === '/signup') {
-                await usersignup(values).unwrap();
-                navigate('/login'); // Navigate to /login after user signup
+                await usersignup(formData).unwrap();
+                navigate('/login');
             } else if (location.pathname === '/dashboard/signup') {
-                await adminsignup(values).unwrap();
-                navigate('/dashboard'); // Navigate to /dashboard after admin signup
+                await adminsignup(formData).unwrap();
+                navigate('/dashboard');
             }
         } catch (error) {
             setErrors({ server: error.data.message });
         }
         setSubmitting(false);
     };
+
 
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
@@ -120,6 +133,16 @@ const Signup = () => {
                                     placeholder="Enter your contact number"
                                 />
                                 <ErrorMessage name="contact" component="div" className="text-danger mt-1" />
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="profilePic" className="form-label">Profile Picture</label>
+                                <input
+                                    type="file"
+                                    id="profilePic"
+                                    name="profilePic"
+                                    className="form-control"
+                                    onChange={(e) => setProfilePic(e.target.files[0])}
+                                />
                             </div>
                             {errors.server && <div className="text-danger mb-3">{errors.server}</div>}
                             <div className="d-grid">

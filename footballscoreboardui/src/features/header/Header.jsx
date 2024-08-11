@@ -9,10 +9,11 @@ function Header() {
     const { theme, toggleTheme } = useTheme();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
-    // Access token and role from Redux state
+
+    // Access token, role, and profile picture from Redux state
     const token = useSelector(state => state.auth.token);
     const role = useSelector(state => state.auth.role);
+    const profilePic = useSelector(state => state.auth.profilePic);
 
     useEffect(() => {
         // Manually initialize dropdown
@@ -25,6 +26,7 @@ function Header() {
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('role');
+        localStorage.removeItem('profilePic');
         dispatch(logout());
         navigate('/');
     };
@@ -98,10 +100,9 @@ function Header() {
                                         aria-expanded="false"
                                     >
                                         <img
-                                            src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-                                            className="rounded-circle"
-                                            height="25"
-                                            alt="Black and White Portrait of a Man"
+                                            src={profilePic ? `http://localhost:3000/${profilePic}` : "https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"}
+                                            className="rounded-circle profile-img"
+                                            alt="Profile"
                                             loading="lazy"
                                         />
                                     </a>

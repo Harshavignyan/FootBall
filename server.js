@@ -1,6 +1,6 @@
-var express = require('express');
-var cors = require('cors');
-var app = express();
+const express = require('express');
+const cors = require('cors');
+const app = express();
 const http = require('http');
 const socketIo = require('socket.io');
 const path = require('path');
@@ -10,9 +10,13 @@ const Admin = require("./public/admin.model");
 const User = require("./public/user.model");
 const crypto = require('crypto');
 const mongoose = require("mongoose");
+const multer = require('multer');
+const fs = require('fs');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(__dirname + "/public"));
+app.use(express.static(path.join(__dirname, 'public')));
 
 const JWT_SECRET = crypto.randomBytes(32).toString('hex');
 
@@ -22,6 +26,24 @@ app.use(cors());
 mongoose.connect("mongodb://localhost:27017/football")
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
+
+// Configure Multer to handle file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    const username = req.body.username;
+    const userPath = path.join(__dirname, "public", "uploads", username);
+
+    // Create the directory if it doesn't exist
+    fs.mkdirSync(userPath, { recursive: true });
+
+    callback(null, userPath);
+  },
+  filename: (req, file, callback) => {
+    callback(null, "profilePic" + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({ storage: storage });
 
 // Authentication middleware
 const authenticateToken = (req, res, next) => {
@@ -44,14 +66,16 @@ app.post('/login', async (req, res) => {
     let user = await Admin.findOne({ adminusername: username, adminpassword: password });
     if (user) {
       const token = jwt.sign({ username, role: 'admin' }, JWT_SECRET, { expiresIn: '1h' });
-      return res.json({ username, token, role: 'admin' });
+      const profilePic = user.profilePic ? `/uploads/${username}/${user.profilePic}` : "https://mdbcdn.b-cdn.net/img/new/avatars/2.webp";
+      return res.json({ username, token, role: 'admin', profilePic });
     }
 
     // If not found in Admin, check the User collection
     user = await User.findOne({ username, password });
     if (user) {
       const token = jwt.sign({ username, role: 'user' }, JWT_SECRET, { expiresIn: '1h' });
-      return res.json({ username, token, role: 'user' });
+      const profilePic = user.profilePic ? `/uploads/${username}/${user.profilePic}` : "https://mdbcdn.b-cdn.net/img/new/avatars/2.webp";
+      return res.json({ username, token, role: 'user', profilePic });
     }
 
     // If no user found
@@ -63,12 +87,14 @@ app.post('/login', async (req, res) => {
 });
 
 
-// Admin Signup route
-app.post('/registeradmin', async (req, res) => {
+// Admin Signup route with file upload
+app.post('/registeradmin', upload.single('profilePic'), async (req, res) => {
   try {
-    // console.log(req.body)
+    console.log("Received data:", req.body);
+    console.log("Received file:", req.file);
+
     const { email, password, username, contact } = req.body;
-    const existingAdmin = await Admin.findOne({ email });
+    const existingAdmin = await Admin.findOne({ adminemail: email });
 
     if (existingAdmin) {
       return res.status(400).json({ message: 'Admin already exists' });
@@ -78,7 +104,8 @@ app.post('/registeradmin', async (req, res) => {
       adminemail: email,
       adminpassword: password,
       adminusername: username,
-      admincontact: contact
+      admincontact: contact,
+      profilePic: req.file ? req.file.filename : null, // Save the file name in the database
     });
 
     await newAdmin.save();
@@ -89,9 +116,12 @@ app.post('/registeradmin', async (req, res) => {
   }
 });
 
-// User Signup route
-app.post('/registeruser', async (req, res) => {
+// User Signup route with file upload
+app.post('/registeruser', upload.single('profilePic'), async (req, res) => {
   try {
+    console.log("Received data:", req.body);
+    console.log("Received file:", req.file);
+
     const { email, password, username, contact } = req.body;
     const existingUser = await User.findOne({ email });
 
@@ -103,7 +133,8 @@ app.post('/registeruser', async (req, res) => {
       email,
       password,
       username,
-      contact
+      contact,
+      profilePic: req.file ? req.file.filename : null, // Save the file name in the database
     });
 
     await newUser.save();
@@ -113,6 +144,7 @@ app.post('/registeruser', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
 
 // WebSocket setup and handling
 const server = http.createServer(app);
