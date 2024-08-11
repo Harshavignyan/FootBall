@@ -14,6 +14,14 @@ The application allows users to operate and view live football scores in real-ti
 - **User Authentication**: Allows admins and users to sign up, log in, and manage sessions.
 - **Theme Toggle**: Switch between light and dark modes using a toggle button, powered by Context API and Bootstrap styles.
 
+### Reusable Components
+
+To enhance maintainability and ensure consistency, several reusable components have been introduced:
+- **InputField**: A general-purpose input field component for text inputs, including form labels and error messages.
+- **PasswordField**: A specialized component for password fields with a visibility toggle for improved user experience.
+
+These components help in maintaining a consistent look and feel across different forms and simplify updates and maintenance.
+
 ## Features
 
 - Real-time score updates using WebSocket.
@@ -23,6 +31,7 @@ The application allows users to operate and view live football scores in real-ti
 - User and admin authentication with JWT.
 - NavBar with login, signup, and logout options.
 - Theme toggle for switching between light and dark modes.
+- **Reusable Components**: Enhanced code reusability and maintainability with dedicated components for input fields and password management.
 
 ## Getting Started
 
