@@ -1,5 +1,5 @@
 import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,8 @@ import { useLoginMutation } from '../../services/auth.service';
 import { setUser } from './loginSlice';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
+import InputField from '../signup/InputField';
+import PasswordField from '../signup/PasswordField';
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -56,28 +58,19 @@ const Login = () => {
                 >
                     {({ isSubmitting, errors }) => (
                         <Form>
-                            <div className="mb-3">
-                                <label htmlFor="username" className="form-label">Username</label>
-                                <Field 
-                                    type="text" 
-                                    id="username" 
-                                    name="username" 
-                                    className="form-control" 
-                                    placeholder="Enter your username"
-                                />
-                                <ErrorMessage name="username" component="div" className="text-danger mt-1" />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="password" className="form-label">Password</label>
-                                <Field 
-                                    type="password" 
-                                    id="password" 
-                                    name="password" 
-                                    className="form-control" 
-                                    placeholder="Enter your password"
-                                />
-                                <ErrorMessage name="password" component="div" className="text-danger mt-1" />
-                            </div>
+                            <InputField 
+                                id="username" 
+                                name="username" 
+                                type="text" 
+                                placeholder="Enter your username" 
+                                label="Username"
+                            />
+                            <PasswordField 
+                                id="password" 
+                                name="password" 
+                                placeholder="Enter your password" 
+                                label="Password"
+                            />
                             {errors.server && <div className="text-danger mb-3">{errors.server}</div>}
                             <div className="d-grid">
                                 <p className="text-center">If you don't have an account <Link to="/signup">Signup</Link></p>
