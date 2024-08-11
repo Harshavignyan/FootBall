@@ -36,7 +36,7 @@ Ensure you have the following installed on your machine:
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/footballscoreboardapp.git
+    git clone https://github.com/Harshavignyan/FootBall.git
     ```
 
 2. Navigate to the project directory:
@@ -86,11 +86,8 @@ Ensure you have the following installed on your machine:
 ### Match Operator Interface
 ![Match Operator Interface](./assets/screenshot2.png)
 
-### User Dashboard Interface
-![Customer Interface](./assets/screenshot1.png)
-
-### Admin Dashboard Interface
-![Admin Dashboard Interface](./assets/screenshot7.png)
+### Dashboard Interface
+![Dashboard Interface](./assets/screenshot7.png)
 
 ### On Toggle
 ![On Toggle](./assets/screenshot6.png)
@@ -119,6 +116,7 @@ The project uses the following dependencies:
 - `express`: "^4.19.2"
 - `jsonwebtoken`: "^9.0.2"
 - `mongoose`: "^8.5.2"
+- `multer`: "^1.4.5-lts.1"
 - `nodemon`: "^3.1.4"
 - `socket.io`: "^4.7.5"
 
@@ -148,4 +146,3 @@ The following routes are available in the application:
 This project is licensed under the ISC License.
 
 ---
-
