@@ -109,6 +109,7 @@ The project uses the following dependencies:
 - `react-router-dom`: "^6.26.0"
 - `socket.io-client`: "^4.7.5"
 - `yup`: "^1.4.0"
+- `country-calling-code`: "^0.0.4"  *(Updated for handling country codes in user contact information during signup)*
 
 **Backend:**
 - `body-parser`: "^1.20.2"

@@ -3,8 +3,9 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css'; // Import Bootstrap Icons
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useUsersignupMutation, useAdminsignupMutation } from '../../services/auth.service';
+import countryCallingCode from 'country-calling-code';
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -12,7 +13,8 @@ const Signup = () => {
     const [adminsignup] = useAdminsignupMutation();
     const [usersignup] = useUsersignupMutation();
     const [showPassword, setShowPassword] = useState(false);
-    const [profilePic, setProfilePic] = useState(null); // State to hold the selected file
+    const [profilePic, setProfilePic] = useState(null);
+    const [countryCode, setCountryCode] = useState(countryCallingCode[0].countryCodes);
 
     const initialValues = {
         email: '',
@@ -39,16 +41,15 @@ const Signup = () => {
     });
 
     const onSubmit = async (values, { setSubmitting, setErrors }) => {
+        const formattedContact = `+${countryCode}${values.contact}`; // Correctly format the contact number
         const formData = new FormData();
         formData.append('email', values.email);
         formData.append('password', values.password);
         formData.append('username', values.username);
-        formData.append('contact', values.contact);
+        formData.append('contact', formattedContact); // Use the formatted contact number
         if (profilePic) {
             formData.append('profilePic', profilePic);
         }
-
-        console.log('Submitting FormData:', formData);
 
         try {
             if (location.pathname === '/signup') {
@@ -64,14 +65,13 @@ const Signup = () => {
         setSubmitting(false);
     };
 
-
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
     };
 
     return (
         <div className="container d-flex justify-content-center align-items-center vh-100">
-            <div className="card p-4 shadow-lg" style={{ maxWidth: '400px', width: '100%' }}>
+            <div className="card p-4 shadow-lg" style={{ maxWidth: '500px', width: '100%' }}>
                 <h1 className="text-center mb-4">Signup</h1>
                 <Formik
                     initialValues={initialValues}
@@ -125,13 +125,26 @@ const Signup = () => {
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="contact" className="form-label">Contact</label>
-                                <Field
-                                    type="text"
-                                    id="contact"
-                                    name="contact"
-                                    className="form-control"
-                                    placeholder="Enter your contact number"
-                                />
+                                <div className="input-group">
+                                    <select
+                                        className="form-select"
+                                        onChange={(e) => setCountryCode(e.target.value)}
+                                        value={countryCode}
+                                    >
+                                        {countryCallingCode.map((country) => (
+                                            <option key={country.countryCodes} value={country.countryCodes}>
+                                                {country.isoCode3} (+{country.countryCodes})
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <Field
+                                        type="text"
+                                        id="contact"
+                                        name="contact"
+                                        className="form-control"
+                                        placeholder="Enter your contact number"
+                                    />
+                                </div>
                                 <ErrorMessage name="contact" component="div" className="text-danger mt-1" />
                             </div>
                             <div className="mb-3">
